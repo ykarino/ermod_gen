@@ -1,8 +1,8 @@
 ermod script file
 -----------------
 
-gen_structure : log, psf ファイルから soln, refs ディレクトリを作成
-gen_input     : log, dcd ファイルから MDinfo, paramaters_er 等を編集
+gen_structure : log, psf ファイルから soln, refs ディレクトリを作成  
+gen_input     : log, dcd ファイルから MDinfo, paramaters_er 等を編集  
 ermod-0.2.4 対応
 
 ファイルのダウンロード
