@@ -12,9 +12,9 @@ parser.add_option("-p", "--param", dest = "param", action = "append",
                   help = "CHARMM parameter file name (can be specified multiple-time)",
                   default = [])
 parser.add_option("-c", "--conf", dest = "conf",
-                  help = "NAMD configuration file (only used to find CHARMM paramter files)")
+                  help = "GENESIS input file (only used to find CHARMM paramter files)")
 parser.add_option("-l", "--log", dest = "log",
-                  help = "NAMD log file (only used to find CHARMM paramter files)")
+                  help = "GENESIS log file (only used to find CHARMM paramter files)")
 
 # PSF, mandatory
 parser.add_option("-t", "--psf", dest = "topology",
@@ -90,7 +90,7 @@ def get_params():
             sys.exit(1)
         return lst
     if options.conf:
-        return mine_from_file(options.conf, "configuration", r"^\s*parameters\s+(\S+)", 1)
+        return mine_from_file(options.conf, "configuration", r"^parfile =\s+(\S+)", 1)
     if options.log:
         return mine_from_file(options.log, "log", r"^  parfile =\s+(\S+)", 1)
 
