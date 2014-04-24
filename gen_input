@@ -81,7 +81,7 @@ def parse_log():
     freq = 0
 #    infopat = re.compile(r"Info: ")
 #    runpat = re.compile(r"Running for\s+(\d+)")
-    runpat = re.compile(r"nsteps          =\s+(\d+)")
+    runpat = re.compile(r"nsteps\s+=\s+(\d+)")
     for l in logfh:
         # TCL: Running for 500000 steps
         m = runpat.search(l)
@@ -93,27 +93,27 @@ def parse_log():
         # Info: BERENDSEN PRESSURE COUPLING ACTIVE
         # Info: LANGEVIN PISTON PRESSURE CONTROL ACTIVE
 #        if re.search(r"ensemble        = NPT", l):
-        if re.search(r" ensemble        = NPT", l):
+        if re.search(r" ensemble\s+=\s+NPT", l):
             simtype = 2 # npt
 
         # Info: LANGEVIN DYNAMICS ACTIVE
         # Info: LANGEVIN TEMPERATURE   300
-        m = re.search(r"temperature     =\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
+        m = re.search(r"temperature\s+=\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
         if m:
             temp = float(m.group(1))
         
         # Info: SWITCHING ACTIVE
         # Info: SWITCHING ON           9
         # Info: SWITCHING OFF          10
-        m = re.search(r"cutoffdist      =\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
+        m = re.search(r"cutoffdist\s+=\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
         if m:
             cut = float(m.group(1))
-        m = re.search(r"switchdist      =\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
+        m = re.search(r"switchdist\s+=\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
         if m:
             switchlj = float(m.group(1))
 
         # Info: PERIODIC CELL BASIS 1  64 0 0
-        if re.search(r"electrostatic   = Ewald", l):
+        if re.search(r"electrostatic\s+=\s+Ewald", l):
             is_periodic = 1
             coulombtype = 1 # Ewald
             
@@ -122,13 +122,13 @@ def parse_log():
         # Info: PME EWALD COEFFICIENT       0.3"
         # Info: PME INTERPOLATION ORDER     4"
         # Info: PME GRID DIMENSIONS         64 64 128"
-        if re.search(r"electrostatic   = PME", l):
+        if re.search(r"electrostatic\s+=\s+PME", l):
             is_periodic = 1
             coulombtype = 2 # PME
-        m = re.search(r"pme_alpha       =\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
+        m = re.search(r"pme_alpha\s+=\s+([-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?)", l)
         if m:
             alpha = float(m.group(1))
-        m = re.search(r"pme_nspline     =\s+(\d+)", l)
+        m = re.search(r"pme_nspline\s+=\s+(\d+)", l)
         if m:
             pme_order = int(m.group(1))
 #        m = re.search(r"PME GRID DIMENSIONS\s+(\d+) (\d+) (\d+)", l)
@@ -139,7 +139,7 @@ def parse_log():
             box3 = int(m.group(3))
 
         # Info: DCD FREQUENCY          100
-        m = re.search(r"crdoutfreq      =\s+(\d+)", l)
+        m = re.search(r"crdout_period\s+=\s+(\d+)", l)
         if m:
             freq = int(m.group(1))
             
