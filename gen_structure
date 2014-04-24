@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# ermod structure file generator for GENESIS 0.1
 
 import os.path
 import sys
